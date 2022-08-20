@@ -101,8 +101,7 @@ steps:
       export artifactJarSHA256=$(sha256sum ${artifactJar} | sed -rn
       's/(\w+)\W.*/\1/p')
       
-      org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate
-      -Dexpression=project.version -q -DforceStdout)
+      org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.version -q -DforceStdout)
       export artifactId=$(${azure_buildprops_MAVEN_EXEC}
       org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate
       -Dexpression=project.artifactId -q -DforceStdout)
@@ -114,21 +113,15 @@ steps:
       cat target/generated/build-metadata/build.properties | egrep -v
       "^[#|name|timestamp]" | sed 's/^/artifact\.build\./'
       >${azure_buildprops_CICD_DIR}/deploy.properties
-      echo "artifact.file=${artifactJar}"
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
-      echo "artifact.sha1=${artifactJarSHA1}"
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
-      echo "artifact.sha256=${artifactJarSHA256}"
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
-      echo "artifact.groupId=${groupId}"
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
-      echo "artifact.artifactId=${artifactId}"
-      >>${azure_buildprops_CICD_DIR}/deploy.properties
+      echo "artifact.file=${artifactJar}" >>${azure_buildprops_CICD_DIR}/deploy.properties
+      echo "artifact.sha1=${artifactJarSHA1}" >>${azure_buildprops_CICD_DIR}/deploy.properties
+      echo "artifact.sha256=${artifactJarSHA256}" >>${azure_buildprops_CICD_DIR}/deploy.properties >>${azure_buildprops_CICD_DIR}/deploy.properties 
+      echo "artifact.groupId=${groupId}" >>${azure_buildprops_CICD_DIR}/deploy.properties
+      echo "artifact.artifactId=${artifactId}" >>${azure_buildprops_CICD_DIR}/deploy.properties
       while IFS='=' read -r key value
-      do
-      key=$(echo $key | tr '.' '_')
-      eval ${key}=\${value}
+        do
+        key=$(echo $key | tr '.' '_')
+        eval ${key}=\${value}
       done < "${azure_buildprops_CICD_DIR}/deploy.properties"
       ARTIFACT_VERSION=$(grep -oP "Upload to artifactory:
       .*/${artifact_build_version}/${artifactId}-\K(.*).jar"
