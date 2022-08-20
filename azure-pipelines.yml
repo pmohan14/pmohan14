@@ -61,8 +61,8 @@ steps:
       MAVEN_SECURITY_SETTINGS=${CICD_DIR}/settings-security.xml
       CICD_DIR=${CICD_DIR}
       EOF
-#- task: Maven@3
-- task: Maven@3.205.1
+- task: Maven@3
+#- task: Maven@3.205.1
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -85,21 +85,19 @@ steps:
       rc=$?; echo "exit code $rc"; if [[ $rc != 0 ]]; then ( echo 'could not perform
       build'; exit $rc; ) fi
       if [ -d ${azure_build_working_directory}/target/checkout ]; then
-      cd ${azure_build_working_directory}/target/checkout
+        cd ${azure_build_working_directory}/target/checkout
       else
-      cd ${azure_build_working_directory}
+        cd ${azure_build_working_directory}
       fi
       ls -la '**/*.war'
       if grep " BUILD FAILURE" ${azure_buildprops_CICD_DIR}/mvn.log
-      then
-      echo 'found errors in build log';
+        then
+         echo 'found errors in build log';
       exit 1;
       fi
       export artifactJar=$(**/*.war)
-      export artifactJarSHA1=$(sha1sum ${artifactJar} | sed -rn
-      's/(\w+)\W.*/\1/p')
-      export artifactJarSHA256=$(sha256sum ${artifactJar} | sed -rn
-      's/(\w+)\W.*/\1/p')
+      export artifactJarSHA1=$(sha1sum ${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
+      export artifactJarSHA256=$(sha256sum ${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
       
       org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.version -q -DforceStdout)
       export artifactId=$(${azure_buildprops_MAVEN_EXEC}
@@ -108,8 +106,7 @@ steps:
       export groupId=$(${azure_buildprops_MAVEN_EXEC}
       org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate
       -Dexpression=project.groupId -q -DforceStdout)
-      ${azure_buildprops_MAVEN_EXEC} -Dmaven.buildNumber.revisionOnScmFailure=NOREVISION
-      -Dmaven.buildNumber.shortRevisionLength=7 buildnumber:create-metadata
+      ${azure_buildprops_MAVEN_EXEC} -Dmaven.buildNumber.revisionOnScmFailure=NOREVISION -Dmaven.buildNumber.shortRevisionLength=7 buildnumber:create-metadata
       cat target/generated/build-metadata/build.properties | egrep -v
       "^[#|name|timestamp]" | sed 's/^/artifact\.build\./'
       >${azure_buildprops_CICD_DIR}/deploy.properties
