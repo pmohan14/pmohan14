@@ -26,7 +26,7 @@ steps:
       master=$(mvn --encrypt-master-password ${uuid})
       cat >${CICD_DIR}/settings-security.xml <<EOL
       <settingsSecurity>
-      <master>${master}</master>
+        <master>${master}</master>
       </settingsSecurity>
       EOL
       chmod 600 ${CICD_DIR}/settings-security.xml
@@ -38,19 +38,19 @@ steps:
       xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
       http://maven.apache.org/xsd/settings-1.0.0.xsd">
       <servers>
-      <server>
-      <id>artifactory</id>
-      <username>${account_username}</username>
-      <password>${password}</password>
-      </server>
+         <server>
+            <id>artifactory</id>
+            <username>${account_username}</username>
+            <password>${password}</password>
+         </server>
       </servers>
       <mirrors>
-      <mirror>
-      <id>artifactory</id>
-      <name>Artifactory_Staging-releases</name>
-      <url>https://artifactory/</url>
-      <mirrorOf>central</mirrorOf>
-      </mirror>
+         <mirror>
+         <id>artifactory</id>
+         <name>Artifactory_Staging-releases</name>
+         <url>https://artifactory/</url>
+         <mirrorOf>central</mirrorOf>
+         </mirror>
       </mirrors>
       </settings>
       EOL
