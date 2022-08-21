@@ -31,7 +31,7 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-- script: echo '$(Build.BuildNumber)$(artifact.version)'
+- script: echo '$(Build.BuildNumber)$(Build.BuildId)'
 
   
 
