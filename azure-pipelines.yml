@@ -32,6 +32,7 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 - script: echo '$(Build.BuildNumber)'
+- script: git rev-parse HEAD
 - script: git branch -r
 
   
