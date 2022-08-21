@@ -32,13 +32,35 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
+variables:
+- name: appVersion
+  value: 1.0
+- name: bNumber
+  value: $(Build.BuildNumber)
+- task: AzureCLI@2
+  inputs:
+   # azureSubscription: ''
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      #!/bin/sh
+      appVersion=$1
+      buildNo=$2    
+      echo printing values:
+      echo appVersion= "$appVersion"
+      echo buildNo= "$buildNo"
+    arguments: '''${{ variables.appVersion }} ${{ variables.bNumber }}'''
+
+
+
+
 - task: DownloadSecureFile@1
   inputs:
     secureFile: 'custom-script.sh'
-- task: Bash@3
-  name: mvnbuild
-  inputs:
-    filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
+# - task: Bash@3
+#   name: mvnbuild
+#   inputs:
+#     filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
 
 - task: CopyFiles@2
   inputs:
