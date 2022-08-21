@@ -15,7 +15,7 @@ steps:
     secureFile: 'custom_setup.sh'
 - task: Bash@3
   inputs:
-    filePath: 'custom_setup.sh'
+    filePath: '$(System.DefaultWorkingDirectory)/custom_setup.sh'
 # - task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)'
