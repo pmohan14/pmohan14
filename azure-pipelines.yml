@@ -16,7 +16,7 @@ steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
-    options: '-X -B -s $(mvnSettings.secureFilePath)'
+    #options: '-X -B -s $(mvnSettings.secureFilePath)'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
