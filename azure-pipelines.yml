@@ -14,6 +14,7 @@ steps:
   inputs:
     secureFile: 'custom_setup.sh'
 - task: Bash@3
+  name: mvnsetup
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/custom_setup.sh'
 # - task: Bash@3
