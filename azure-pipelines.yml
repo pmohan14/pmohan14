@@ -20,6 +20,13 @@ steps:
 # - task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)'
+
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'custom-script.sh'
+- task: Bash@3
+  inputs:
+    filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
