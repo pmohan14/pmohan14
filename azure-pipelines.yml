@@ -17,6 +17,8 @@ steps:
   name: mvnsetup
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/custom_setup.sh'
+    workingDirectory: .cicd/build.properties
+    bashEnvValue: $(workingDirectory)
 # - task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)'
@@ -26,6 +28,7 @@ steps:
     secureFile: 'custom-script.sh'
 - task: Bash@3
   inputs:
+    workingDirectory: .cicd/build.properties
     filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
 - task: Maven@3
   inputs:
