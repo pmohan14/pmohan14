@@ -17,7 +17,7 @@ steps:
   name: mvnsetup
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/custom_setup.sh'
-    workingDirectory: .cicd/build.properties
+    workingDirectory: 'touch $(System.DefaultWorkingDirectory).cicd/build.properties'
     bashEnvValue: $(workingDirectory)
 # - task: Bash@3
 #   inputs:
@@ -27,6 +27,7 @@ steps:
   inputs:
     secureFile: 'custom-script.sh'
 - task: Bash@3
+  name: mvnconfiguration
   inputs:
     workingDirectory: .cicd/build.properties
     filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
