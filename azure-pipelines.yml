@@ -17,7 +17,7 @@ steps:
   name: mvnsetup
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/custom_setup.sh'
-    workingDirectory: 'touch $(System.DefaultWorkingDirectory).cicd/build.properties'
+    workingDirectory: 'touch .cicd/build.properties'
     bashEnvValue: $(workingDirectory)
 # - task: Bash@3
 #   inputs:
