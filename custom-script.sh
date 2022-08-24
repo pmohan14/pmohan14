@@ -1,5 +1,5 @@
 #!/bin/sh
-${azure_buildprops_MAVEN_EXEC} -B -s ${azure_buildprops_MAVEN_SETTINGS} -Dsettings.security=${azure_buildprops_MAVEN_SECURITY_SETTINGS} $@ 2>&1 | tee ${azure_buildprops_CICD_DIR}/mvn.log
+${azure_buildprops_MAVEN_EXEC} -s ${azure_buildprops_MAVEN_SETTINGS} -Dsettings.security=${azure_buildprops_MAVEN_SECURITY_SETTINGS} $@ 2>&1 | tee ${azure_buildprops_CICD_DIR}/mvn.log
 rc=$?; echo "exit code $rc"; if [[ $rc != 0 ]]; then ( echo 'could not perform build'; exit $rc; ) fi
 if [ -d ${azure_build_working_directory}/target/checkout ]; then
    cd ${azure_build_working_directory}/target/checkout
