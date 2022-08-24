@@ -1,17 +1,17 @@
 #!/bin/sh
-${azure_buildprops_MAVEN_EXEC} -s ${azure_buildprops_MAVEN_SETTINGS} -Dsettings.security=${azure_buildprops_MAVEN_SECURITY_SETTINGS} $@ 2>&1 | tee ${azure_buildprops_CICD_DIR}/mvn.log
-rc=$?; echo "exit code $rc"; if [[ $rc != 0 ]]; then ( echo 'could not perform build'; exit $rc; ) fi
-if [ -d ${azure_build_working_directory}/target/checkout ]; then
-   cd ${azure_build_working_directory}/target/checkout
-else
-   cd ${azure_build_working_directory}
-fi
-ls -la target/*.jar
-if grep " BUILD FAILURE" ${azure_buildprops_CICD_DIR}/mvn.log
-  then
-  echo 'found errors in build log';
-  exit 1;
-fi
+#${azure_buildprops_MAVEN_EXEC} -s ${azure_buildprops_MAVEN_SETTINGS} -Dsettings.security=${azure_buildprops_MAVEN_SECURITY_SETTINGS} $@ 2>&1 | tee ${azure_buildprops_CICD_DIR}/mvn.log
+#rc=$?; echo "exit code $rc"; if [[ $rc != 0 ]]; then ( echo 'could not perform build'; exit $rc; ) fi
+#if [ -d ${azure_build_working_directory}/target/checkout ]; then
+#   cd ${azure_build_working_directory}/target/checkout
+#else
+#   cd ${azure_build_working_directory}
+#fi
+#ls -la target/*.jar
+#if grep " BUILD FAILURE" ${azure_buildprops_CICD_DIR}/mvn.log
+#  then
+#  echo 'found errors in build log';
+#  exit 1;
+#fi
 export artifactJar=$(basename target/*.jar)
 export artifactJarSHA1=$(sha1sum target/${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
 export artifactJarSHA256=$(sha256sum target/${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
