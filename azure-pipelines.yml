@@ -29,8 +29,8 @@ steps:
 - task: Bash@3
   name: mvnconfiguration
   inputs:
-    workingDirectory: .cicd/build.properties
-    #filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
+    #workingDirectory: .cicd/build.properties
+    filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
 - bash: sh custom-script.sh >> .cicd/build.properties
 - task: Maven@3
   inputs:
