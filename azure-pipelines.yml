@@ -20,7 +20,7 @@ steps:
     #workingDirectory: 'touch .cicd/build.properties'
     #bashEnvValue: $(workingDirectory)
 - bash: sh custom_setup.sh >> .cicd/build.properties
-- bash: echo .cicd/build.properties
+- bash: echo $(.cicd/build.properties)
 # - task: Bash@3
 #   inputs:
 #     filePath: '$(System.DefaultWorkingDirectory)'
