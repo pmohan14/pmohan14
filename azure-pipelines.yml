@@ -31,6 +31,7 @@ steps:
   inputs:
     workingDirectory: .cicd/build.properties
     filePath: '$(System.DefaultWorkingDirectory)/custom-script.sh'
+- bash: echo $(workingDirectory)
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
