@@ -12,11 +12,12 @@
 #  echo 'found errors in build log';
 #  exit 1;
 #fi
-export artifactJar=$(basename target/*.jar)
+#export artifactJar=$(basename target/*.jar)
+export artifactJar=$(/home/vsts/work/1/s/webapp/target/*.war)
 export artifactJarSHA1=$(sha1sum target/${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
 export artifactJarSHA256=$(sha256sum target/${artifactJar} | sed -rn 's/(\w+)\W.*/\1/p')
-export artifactId=$(${azure_buildprops_MAVEN_EXEC} org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.artifactId -q -DforceStdout)
-export groupId=$(${azure_buildprops_MAVEN_EXEC} org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.groupId -q -DforceStdout) ${azure_buildprops_MAVEN_EXEC} -Dmaven.buildNumber.revisionOnScmFailure=NOREVISION -Dmaven.buildNumber.shortRevisionLength=7 buildnumber:create-metadata
+#export artifactId=$(${azure_buildprops_MAVEN_EXEC} org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+#export groupId=$(${azure_buildprops_MAVEN_EXEC} org.apache.maven.plugins:maven-help-plugin:3.1.1:evaluate -Dexpression=project.groupId -q -DforceStdout) ${azure_buildprops_MAVEN_EXEC} -Dmaven.buildNumber.revisionOnScmFailure=NOREVISION -Dmaven.buildNumber.shortRevisionLength=7 buildnumber:create-metadata
 cat target/generated/build-metadata/build.properties | egrep -v "^[#|name|timestamp]" | sed 's/^/artifact\.build\./' >${azure_buildprops_CICD_DIR}/deploy.properties
 echo "artifact.file=${artifactJar}" >>${azure_buildprops_CICD_DIR}/deploy.properties
 echo "artifact.sha1=${artifactJarSHA1}" >>${azure_buildprops_CICD_DIR}/deploy.properties
